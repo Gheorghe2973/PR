@@ -1,19 +1,19 @@
 import socket
 import time
 
-def spam_test(host, client_name):
-    print(f"[{client_name}] Sending 30 requests rapidly from {host}...")
+def spam_test(server_host, server_port, client_name, source_ip):
+    print(f"[{client_name}] Sending 30 requests from {source_ip} to {server_host}:{server_port}...")
     
     successful = 0
     rate_limited = 0
-    
     start = time.time()
     
     for i in range(30):
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(2)
-            s.connect((host, 8080))
+            s.bind((source_ip, 0))  
+            s.connect((server_host, server_port))
             
             request = "GET /index.html HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n"
             s.sendall(request.encode())
@@ -46,14 +46,16 @@ if __name__ == "__main__":
     import sys
     
     if len(sys.argv) > 1:
-        host = sys.argv[1]
-        name = sys.argv[2] if len(sys.argv) > 2 else "CLIENT"
+        server_host = sys.argv[1]
+        source_ip = sys.argv[2] if len(sys.argv) > 2 else "127.0.0.1"
+        client_name = sys.argv[3] if len(sys.argv) > 3 else "CLIENT"
     else:
-        host = "127.0.0.1"
-        name = "CLIENT1"
+        server_host = "127.0.0.1"
+        source_ip = "127.0.0.1"
+        client_name = "CLIENT1"
     
     print("=" * 80)
-    print(f"SPAM TEST from {host}")
+    print(f"SPAM TEST from {source_ip} to {server_host}")
     print("=" * 80)
     
-    spam_test(host, name)
+    spam_test(server_host, 8080, client_name, source_ip)

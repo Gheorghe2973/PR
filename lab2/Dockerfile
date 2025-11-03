@@ -8,7 +8,7 @@ COPY server_rate_limit.py .
 COPY server_single_thread.py .
 COPY client.py .
 COPY test_conc.py .
-COPY test_rate.py .
+COPY test_spam.py .
 
 RUN mkdir -p /app/content
 

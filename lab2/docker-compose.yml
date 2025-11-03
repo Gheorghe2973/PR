@@ -8,5 +8,5 @@ services:
       - "8080:8080"
     volumes:
       - ./content:/app/content:ro
-    command: python server_not_rate_limit.py /app/content
+    command: python server_race.py /app/content
     restart: unless-stopped
