@@ -1,7 +1,5 @@
 # PR Lab 3: Multiplayer Game
 
-# PR Lab 3: Multiplayer Game
-
 **Author:** Gurschi Gheorghe
 
 **Data:** 14 Noiembrie 2025
